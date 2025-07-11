@@ -1,0 +1,73 @@
+name: cwtch
+base: core24
+version: '1.15.5' 
+summary: Privacy-focused messaging application
+description: |
+  Cwtch is a privacy-focused messaging application that provides 
+  secure and anonymous communication using Tor networking.
+
+grade: stable 
+confinement: strict 
+
+apps:
+  cwtch:
+    command: wrapper.sh
+    extensions: [gnome]
+    environment:
+     LD_LIBRARY_PATH: "$SNAP/usr/lib/cwtch:$SNAP/usr/lib/x86_64-linux-gnu:$SNAP/usr/lib:$SNAP/lib/x86_64-linux-gnu:$SNAP/lib:$LD_LIBRARY_PATH"
+     HOME: "$SNAP_USER_DATA"
+     XDG_CONFIG_HOME: $SNAP_USER_DATA/.config
+     XDG_DATA_HOME: $SNAP_USER_DATA/.local/share
+     CWTCH_HOME: $SNAP_USER_DATA/.cwtch
+    plugs:
+      - desktop
+      - desktop-legacy
+      - wayland
+      - x11
+      - network
+      - network-bind
+      - home
+      - unity7
+      - gsettings
+      - audio-playback
+      - opengl
+      - hardware-observe
+
+parts:
+   cwtch:
+    source: .
+    plugin: dump
+    override-build: |
+      wget https://git.openprivacy.ca/cwtch.im/cwtch-ui/releases/download/v${SNAPCRAFT_PROJECT_VERSION}/cwtch-v${SNAPCRAFT_PROJECT_VERSION}.tar.gz
+      tar --strip-components=1 -xzf cwtch-v${SNAPCRAFT_PROJECT_VERSION}.tar.gz
+      mkdir -p $CRAFT_PART_INSTALL/lib
+      mkdir -p $CRAFT_PART_INSTALL/data
+      cp -r lib/* $CRAFT_PART_INSTALL/lib/
+      cp -r data/* $CRAFT_PART_INSTALL/data/
+      cp cwtch $CRAFT_PART_INSTALL/
+      cat > $CRAFT_PART_INSTALL/wrapper.sh << 'EOF'
+      #!/bin/bash
+      cd ${SNAP}
+      exec env LD_LIBRARY_PATH="${SNAP}/usr/lib/cwtch:${SNAP}/usr/lib/x86_64-linux-gnu:${SNAP}/usr/lib:${SNAP}/lib/x86_64-linux-gnu:${SNAP}/lib:${LD_LIBRARY_PATH}" ${SNAP}/lib/cwtch "$@"
+      EOF
+      chmod +x $CRAFT_PART_INSTALL/wrapper.sh
+    build-packages:
+      - wget
+      - tar
+      
+    stage-packages:
+      - libgtk-3-bin
+      - libgtk-3-common
+      - libgtk-3-0t64
+      - libgl1
+      - libglu1-mesa
+      - libgles2
+      - libegl1
+      - libgdk-pixbuf2.0-0
+      - libgdk-pixbuf2.0-common
+      - libglib2.0-bin
+      - tor
+      - libcanberra-gtk3-module
+      - libcanberra-gtk-module
+      - libgdk-pixbuf2.0-0
+      - shared-mime-info
