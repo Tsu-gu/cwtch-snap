@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Cwtch messenger
+Exec=cwtch
+Icon=${SNAP}/meta/gui/cwtch.svg
+Comment=Secure messenger
+Terminal=false
+Type=Application
+MimeType=x-content/unix-software;
