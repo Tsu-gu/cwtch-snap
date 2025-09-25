@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Cwtch messenger
-Exec=cwtch
-Icon=${SNAP}/meta/gui/cwtch.svg
+Exec=cwtch-tsugu
+Icon=${SNAP}/meta/gui/cwtch.png
 Comment=Secure messenger
 Terminal=false
 Type=Application
