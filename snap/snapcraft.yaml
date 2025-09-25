@@ -1,4 +1,4 @@
-name: cwtch
+name: cwtch-tsugu
 base: core24
 version: '1.15.5' 
 summary: Privacy-focused messaging application
@@ -10,7 +10,7 @@ grade: stable
 confinement: strict 
 
 apps:
-  cwtch:
+  cwtch-tsugu:
     command: wrapper.sh
     extensions: [gnome]
     environment:
@@ -34,10 +34,11 @@ apps:
       - hardware-observe
 
 parts:
-   cwtch:
+   cwtch-tsugu:
     source: .
     plugin: dump
     override-build: |
+      # Download and extract the tarball
       wget https://git.openprivacy.ca/cwtch.im/cwtch-ui/releases/download/v${SNAPCRAFT_PROJECT_VERSION}/cwtch-v${SNAPCRAFT_PROJECT_VERSION}.tar.gz
       tar --strip-components=1 -xzf cwtch-v${SNAPCRAFT_PROJECT_VERSION}.tar.gz
       mkdir -p $CRAFT_PART_INSTALL/lib
