@@ -9,6 +9,9 @@ description: |
 grade: stable 
 confinement: strict 
 
+platforms:
+  amd64:
+
 apps:
   cwtch-tsugu:
     command: wrapper.sh
