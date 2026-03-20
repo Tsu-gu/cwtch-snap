@@ -1,6 +1,6 @@
 name: cwtch-tsugu
 base: core24
-version: '1.15.5' 
+version: '1.16.3' 
 summary: Privacy-focused messaging application
 description: |
   Cwtch is a privacy-focused messaging application that provides 
